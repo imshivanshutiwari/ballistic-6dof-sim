@@ -28,19 +28,19 @@ Designed as a portfolio-ready demonstration for defence-research organisations s
 
 | Feature | Description |
 |---------|-------------|
-| **Mach-dependent Cd** | Drag coefficient interpolated from McCoy-derived lookup tables (subsonic → transonic → supersonic) |
+| **Interactive Web UI** | Streamlit dashboard with 10+ 2D charts and multi-trajectory 3D plots (`app.py`) |
+| **Inverse Fire** | Target range input → Auto-solves exact elevation angle (Bisection method) |
+| **Moving Target Interception** | Kinematic lead calculation for moving targets |
+| **MRSI** | Multi-Round Simultaneous Impact scheduling with multi-charge zones |
+| **Terminal Ballistics** | Concrete penetration, spallation, and behind-armor effects |
+| **Propulsion & Base Bleed** | Rocket assist (RAP) and base bleed drag reduction |
+| **Mach-dependent Cd** | Drag coefficient interpolated from McCoy-derived lookup tables |
 | **Aerodynamic moments** | Pitch-damping (Cmq), roll-damping (Clp), Magnus moment (Cnpa) |
 | **Quaternion attitude** | Singularity-free rotation representation; no gimbal lock |
 | **ISA atmosphere** | U.S. Standard Atmosphere 1976 (0–20 km) |
 | **Magnus force** | Spin-induced lateral drift |
-| **Coriolis correction** | Optional latitude-dependent correction (`--coriolis`) |
-| **Wind profiles** | Altitude-dependent wind via API; constant wind via CLI |
-| **Animated 3D plot** | `matplotlib.animation.FuncAnimation` fly-through trajectory |
-| **CLI interface** | Full `argparse` configuration (projectile, velocity, elevation, wind, Coriolis) |
-| **CSV export** | Automatic trajectory data export with all 13 state variables + derived quantities |
+| **Coriolis & Wind** | Optional latitude-dependent correction and 3D crosswinds |
 | **3 projectile configs** | 155 mm shell, 12.7 mm HMG round, 122 mm rocket |
-| **30+ unit tests** | pytest suite with atmosphere, aerodynamics, EOM, and integrator coverage |
-| **CI/CD** | GitHub Actions matrix (3 OS × 4 Python versions) |
 
 ---
 
@@ -190,6 +190,20 @@ pytest tests/ -v
 
 ## Usage
 
+### Streamlit Web Interface (Recommended)
+
+The easiest and most powerful way to use the simulator is via the interactive web dashboard:
+
+```bash
+streamlit run app.py
+```
+
+This launches a local web server (usually at `http://localhost:8501`) featuring:
+- **Interactive 3D Trajectories** (Auto-orbiting Plotly animations)
+- **Advanced Fire Control** (Direct Fire, Inverse Fire, Moving Target, MRSI multi-charge)
+- **10+ Telemetry Graphs** (Drag vs Time, Spin Rate, Angle of Attack, Flight Data)
+- **Terminal Effects Dashboard** (Penetration metrics)
+
 ### CLI Options
 
 ```bash
@@ -297,9 +311,7 @@ See [`docs/validation_report.md`](docs/validation_report.md) for details.
 **What it does NOT include:**
 - ❌ Overturning moment ($C_{m\alpha}$)
 - ❌ WGS-84 oblate Earth
-- ❌ Real meteorological data
-- ❌ Propulsion phase (rockets)
-- ❌ Lot-specific aero coefficients
+- ❌ Real-time meteorological GRIB data
 
 See [`docs/assumptions.md`](docs/assumptions.md) for the full analysis.
 
